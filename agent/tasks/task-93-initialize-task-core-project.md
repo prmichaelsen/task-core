@@ -252,9 +252,10 @@ console.log('Watching for changes...')
 
 ```bash
 mkdir -p src/{schemas,dto,services,constant}
-mkdir -p __tests__/{schemas,dto,services}
 mkdir -p agent/{design,milestones,tasks,patterns}
 ```
+
+**Note**: Tests are colocated with source files (e.g., `src/schemas/task.spec.ts`)
 
 ### 8. Create .gitignore
 

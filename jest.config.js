@@ -24,7 +24,6 @@ export default {
     '!src/**/*.e2e.ts'
   ],
   testMatch: [
-    '**/__tests__/**/*.ts',
     '**/*.spec.ts',
     '**/*.e2e.ts'
   ]
