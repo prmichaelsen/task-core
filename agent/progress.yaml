@@ -16,11 +16,11 @@ milestones:
   - id: M3
     name: Core Library Extraction
     status: in_progress
-    progress: 33
+    progress: 42
     started: 2026-02-18
     completed: null
     estimated_weeks: 1
-    tasks_completed: 4
+    tasks_completed: 5
     tasks_total: 12
     notes: |
       Extract shared business logic from task-mcp into standalone npm package.
@@ -59,10 +59,10 @@ tasks:
     
     - id: task-97
       name: Prepare for Publishing
-      status: not_started
+      status: completed
       file: agent/tasks/task-97-prepare-publishing.md
       estimated_hours: 1
-      completed_date: null
+      completed_date: 2026-02-18
     
     - id: task-98
       name: Publish to npm
