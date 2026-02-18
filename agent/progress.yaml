@@ -75,19 +75,25 @@ progress:
 recent_work:
   - date: 2026-02-18
     description: |
-      Completed Task 94 - Move core files from task-mcp.
-      Copied 2,768 lines of code (12 TypeScript files).
+      Verified build and tests - 93% passing (43/46 tests).
+      Fixed TypeScript compilation issues.
     items:
-      - ✅ Copied schemas/task.ts (4,171 lines)
-      - ✅ Copied dto files (task-api.dto.ts, transformers.ts, index.ts)
-      - ✅ Copied services/task-database.service.ts (11,482 lines)
-      - ✅ Copied client.ts (8,304 lines)
-      - ✅ Copied constant/collections.ts (3,509 lines)
-      - ✅ Copied all test files (transformers.spec.ts, task-database.service.spec.ts, task-database.service.e2e.ts, client.spec.ts)
-      - ✅ Updated import paths from @/ aliases to relative paths
-      - ✅ Created convenience index.ts for re-exports
-      - ✅ Committed changes (9212098)
-      - ⚠️ TypeScript errors expected (dependencies not installed)
+      - ✅ Installed dependencies (npm install)
+      - ✅ Fixed enum export conflicts (removed src/index.ts)
+      - ✅ TypeScript compilation passing
+      - ✅ Build successful (esbuild + declarations)
+      - ✅ 43 unit tests passing (transformers, service, client)
+      - ⚠️ 3 E2E tests failing (require Firestore emulator - expected)
+      - ✅ Committed changes
+      
+  - date: 2026-02-18
+    description: |
+      Completed Tasks 93 & 94 - Project initialized and core files moved.
+    items:
+      - ✅ Task 93: Initialize project (e24cab4, da6f984, 8800309)
+      - ✅ Task 94: Move core files (9212098, adbfcbc)
+      - ✅ 2,768 lines of code copied from task-mcp
+      - ✅ All import paths updated to relative paths
       
   - date: 2026-02-18
     description: |
@@ -117,8 +123,7 @@ notes:
   - Tests are colocated (end in .spec.ts)
 
 # Current blockers (remove when resolved)
-current_blockers:
-  - Dependencies not installed (npm install was denied - TypeScript errors expected)
+current_blockers: []
 
 # Dependencies and integrations
 dependencies:
