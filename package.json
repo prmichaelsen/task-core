@@ -1,0 +1,60 @@
+{
+  "name": "@prmichaelsen/task-core",
+  "version": "1.0.0",
+  "description": "Core business logic for task execution system",
+  "type": "module",
+  "main": "dist/index.js",
+  "exports": {
+    "./schemas": {
+      "types": "./dist/schemas/task.d.ts",
+      "import": "./dist/schemas/task.js"
+    },
+    "./dto": {
+      "types": "./dist/dto/index.d.ts",
+      "import": "./dist/dto/index.js"
+    },
+    "./services": {
+      "types": "./dist/services/task-database.service.d.ts",
+      "import": "./dist/services/task-database.service.js"
+    },
+    "./client": {
+      "types": "./dist/client.d.ts",
+      "import": "./dist/client.js"
+    },
+    "./constants": {
+      "types": "./dist/constant/collections.d.ts",
+      "import": "./dist/constant/collections.js"
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.build.js",
+    "build:watch": "node esbuild.watch.js",
+    "clean": "rm -rf dist",
+    "dev": "npm run build:watch",
+    "test": "jest",
+    "test:unit": "jest --testMatch='**/*.spec.ts'",
+    "test:e2e": "jest --testMatch='**/*.e2e.ts'",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run clean && npm run build && npm test"
+  },
+  "keywords": [
+    "task-execution",
+    "firestore",
+    "schemas",
+    "business-logic"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^13.6.1",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.14",
+    "@types/node": "^25.2.3",
+    "esbuild": "^0.27.3",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
+  }
+}

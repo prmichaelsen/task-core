@@ -1,0 +1,126 @@
+# Project Progress Tracking
+# This file tracks the overall progress of the project, including milestones, tasks, and recent work.
+
+project:
+  name: task-core
+  version: 1.0.0
+  started: 2026-02-18
+  status: not_started
+  current_milestone: M3
+  description: |
+    Core business logic library for task execution system.
+    Extracted from task-mcp to enable code reuse between MCP server and REST API.
+
+# Milestones represent major phases of the project
+milestones:
+  - id: M3
+    name: Core Library Extraction
+    status: not_started
+    progress: 0
+    started: null
+    completed: null
+    estimated_weeks: 1
+    tasks_completed: 0
+    tasks_total: 12
+    notes: |
+      Extract shared business logic from task-mcp into standalone npm package.
+      This enables code reuse between MCP server and upcoming REST API service.
+
+# Tasks are granular work items within milestones
+tasks:
+  milestone_3:
+    - id: task-93
+      name: Initialize task-core Project
+      status: not_started
+      file: agent/tasks/task-93-initialize-task-core-project.md
+      estimated_hours: 2
+      completed_date: null
+      notes: |
+        Set up project structure, TypeScript, build tools, testing infrastructure.
+    
+    - id: task-94
+      name: Move Core Files to task-core
+      status: not_started
+      file: agent/tasks/task-94-move-core-files.md
+      estimated_hours: 4
+      completed_date: null
+      notes: |
+        Copy schemas, DTOs, services, client, constants from task-mcp.
+
+# Documentation tracking
+documentation:
+  design_documents: 0
+  milestone_documents: 1
+  pattern_documents: 0
+  task_documents: 2
+  last_updated: 2026-02-18
+
+# Overall progress metrics
+progress:
+  planning: 100
+  implementation: 0
+  testing: 0
+  documentation: 50
+  overall: 0
+
+# Recent work log (most recent first)
+recent_work:
+  - date: 2026-02-18
+    description: |
+      Initialized ACP context for task-core project.
+      Reviewed project structure and documentation.
+    items:
+      - ✅ Checked for ACP updates (up to date)
+      - ✅ Read milestone-3-core-library-extraction.md
+      - ✅ Read task-93-initialize-task-core-project.md
+      - ✅ Read task-94-move-core-files.md
+      - ✅ Created progress.yaml for tracking
+      - 📋 Project not yet initialized (no package.json or source files)
+
+# Next steps (prioritized list)
+next_steps:
+  - Start Task 93: Initialize task-core project structure
+  - Create package.json with proper exports configuration
+  - Set up TypeScript, Jest, and esbuild configurations
+  - Create directory structure (src/, __tests__/)
+  - Initialize git repository
+
+# General notes and observations
+notes:
+  - Project is in planning phase - no source code exists yet
+  - Will extract code from task-mcp project (located elsewhere)
+  - Target version: 1.0.0 (stable API from start)
+  - Uses ESM modules, esbuild for bundling, Jest for testing
+  - Will publish to npm as @prmichaelsen/task-core
+
+# Current blockers (remove when resolved)
+current_blockers:
+  - Need to locate task-mcp source project to extract files from
+  - Project structure not yet created
+
+# Dependencies and integrations
+dependencies:
+  external_services: []
+  
+  libraries:
+    - name: firebase-admin
+      version: "^13.6.1"
+      purpose: |
+        Firestore database operations
+    
+    - name: zod
+      version: "^4.3.6"
+      purpose: |
+        Schema validation and type inference
+  
+  infrastructure:
+    - name: npm registry
+      status: pending
+      notes: |
+        Will publish package to npm after completion
+
+# Quality metrics
+quality:
+  test_coverage: 0
+  code_review_status: pending
+  documentation_status: in_progress
