@@ -16,11 +16,11 @@ milestones:
   - id: M3
     name: Core Library Extraction
     status: in_progress
-    progress: 17
+    progress: 25
     started: 2026-02-18
     completed: null
     estimated_weeks: 1
-    tasks_completed: 2
+    tasks_completed: 3
     tasks_total: 12
     notes: |
       Extract shared business logic from task-mcp into standalone npm package.
@@ -35,12 +35,6 @@ tasks:
       file: agent/tasks/task-93-initialize-task-core-project.md
       estimated_hours: 2
       completed_date: 2026-02-18
-      notes: |
-        ✅ Created package.json with proper exports
-        ✅ Configured TypeScript, Jest, esbuild
-        ✅ Created directory structure
-        ✅ Initialized git repository
-        ✅ Made initial commit
     
     - id: task-94
       name: Move Core Files to task-core
@@ -48,12 +42,34 @@ tasks:
       file: agent/tasks/task-94-move-core-files.md
       estimated_hours: 4
       completed_date: 2026-02-18
-      notes: |
-        ✅ Copied all source files from task-mcp
-        ✅ Updated import paths to relative paths
-        ✅ Copied all test files (colocated .spec.ts)
-        ✅ Created convenience index.ts
-        ⚠️ Dependencies not installed (TypeScript errors expected)
+    
+    - id: task-95
+      name: Verify Build Configuration and Exports
+      status: completed
+      file: agent/tasks/task-95-verify-build-exports.md
+      estimated_hours: 1
+      completed_date: 2026-02-18
+    
+    - id: task-96
+      name: Update Documentation
+      status: not_started
+      file: agent/tasks/task-96-update-documentation.md
+      estimated_hours: 2
+      completed_date: null
+    
+    - id: task-97
+      name: Prepare for Publishing
+      status: not_started
+      file: agent/tasks/task-97-prepare-publishing.md
+      estimated_hours: 1
+      completed_date: null
+    
+    - id: task-98
+      name: Publish to npm
+      status: not_started
+      file: agent/tasks/task-98-publish-npm.md
+      estimated_hours: 0.5
+      completed_date: null
 
 # Documentation tracking
 documentation:
