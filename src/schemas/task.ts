@@ -219,6 +219,12 @@ export const TaskSchema = z.object({
   started_at: z.string().optional(),
   completed_at: z.string().optional(),
   
+  // Machine configuration
+  machine_id: z.string().default('default'),
+  
+  // Project working directory (base CWD)
+  working_directory: z.string(),
+  
   progress: TaskProgressSchema,
   execution: TaskExecutionSchema,
   config: TaskConfigSchema,

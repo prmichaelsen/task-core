@@ -38,8 +38,10 @@ export class TaskDatabaseService {
     userId: string,
     title: string,
     description: string,
+    workingDirectory: string,
     config?: Partial<Task['config']>,
-    metadata?: Task['metadata']
+    metadata?: Task['metadata'],
+    machineId?: string
   ): Promise<Task> {
     const db = this.getDb()
     const now = new Date().toISOString()
@@ -51,6 +53,8 @@ export class TaskDatabaseService {
       status: 'not_started',
       created_at: now,
       updated_at: now,
+      machine_id: machineId || 'default',
+      working_directory: workingDirectory,
       progress: {
         project: {
           name: title,

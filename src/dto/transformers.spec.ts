@@ -298,6 +298,8 @@ describe('DTO Transformers', () => {
         created_at: '2026-02-16T10:00:00Z',
         updated_at: '2026-02-16T12:00:00Z',
         started_at: '2026-02-16T10:30:00Z',
+        machine_id: 'default',
+        working_directory: '/home/user/project',
         progress: createTestProgress({
           project: {
             name: 'Test Project',
@@ -358,6 +360,8 @@ describe('DTO Transformers', () => {
         status: 'not_started',
         created_at: '2026-02-16T10:00:00Z',
         updated_at: '2026-02-16T10:00:00Z',
+        machine_id: 'default',
+        working_directory: '/home/user/project',
         progress: createTestProgress(),
         execution: {
           api_messages: [],
@@ -428,6 +432,8 @@ describe('DTO Transformers', () => {
           status: 'completed',
           created_at: '2026-02-16T10:00:00Z',
           updated_at: '2026-02-16T12:00:00Z',
+          machine_id: 'default',
+          working_directory: '/home/user/project',
           progress: createTestProgress({
             progress: {
               planning: 100,
@@ -455,6 +461,8 @@ describe('DTO Transformers', () => {
           status: 'in_progress',
           created_at: '2026-02-16T11:00:00Z',
           updated_at: '2026-02-16T12:00:00Z',
+          machine_id: 'default',
+          working_directory: '/home/user/project',
           progress: createTestProgress({
             progress: {
               planning: 50,

@@ -113,7 +113,8 @@ describe('TaskDatabaseService', () => {
       const task = await TaskDatabaseService.createTask(
         'user-456',
         'Test Task',
-        'Test Description'
+        'Test Description',
+        '/home/user/project'
       )
 
       expect(task.id).toBe(mockTaskId)
@@ -134,8 +135,8 @@ describe('TaskDatabaseService', () => {
         'user-456',
         'Custom Task',
         'Custom Description',
+        '/home/user/project',
         {
-          
           auto_approve: false,
           max_iterations: 50
         }
@@ -155,6 +156,8 @@ describe('TaskDatabaseService', () => {
         status: 'in_progress',
         created_at: '2026-02-16T00:00:00Z',
         updated_at: '2026-02-16T00:00:00Z',
+        machine_id: 'default',
+        working_directory: '/home/user/project',
         progress: createTestProgress(),
         execution: {
           api_messages: [],
@@ -261,6 +264,8 @@ describe('TaskDatabaseService', () => {
             status: 'not_started',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
+            machine_id: 'default',
+            working_directory: '/home/user/project',
             progress: createTestProgress({
               progress: {
                 planning: 0,
@@ -404,6 +409,8 @@ describe('TaskDatabaseService', () => {
             status: 'in_progress',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
+            machine_id: 'default',
+            working_directory: '/home/user/project',
             progress: createTestProgress(),
             execution: {
               api_messages: [],
@@ -442,6 +449,8 @@ describe('TaskDatabaseService', () => {
             status: 'in_progress',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
+            machine_id: 'default',
+            working_directory: '/home/user/project',
             progress: createTestProgress(),
             execution: {
               api_messages: [],
@@ -463,6 +472,8 @@ describe('TaskDatabaseService', () => {
             status: 'not_started',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
+            machine_id: 'default',
+            working_directory: '/home/user/project',
             progress: createTestProgress(),
             execution: {
               api_messages: [],

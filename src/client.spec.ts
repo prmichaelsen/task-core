@@ -154,12 +154,14 @@ describe('FirebaseClient', () => {
       const mockTask = { id: 'task-456', title: 'New Task' } as any
       ;(TaskDatabaseService.createTask as jest.Mock<any>).mockResolvedValue(mockTask)
       
-      const task = await client.createTask('New Task', 'Description')
+      const task = await client.createTask('New Task', 'Description', '/home/user/project')
       
       expect(TaskDatabaseService.createTask).toHaveBeenCalledWith(
         mockUserId,
         'New Task',
         'Description',
+        '/home/user/project',
+        undefined,
         undefined,
         undefined
       )

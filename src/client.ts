@@ -126,13 +126,15 @@ export class FirebaseClient {
   async createTask(
     title: string,
     description: string,
+    workingDirectory: string,
     config?: Partial<Task['config']>,
-    metadata?: Task['metadata']
+    metadata?: Task['metadata'],
+    machineId?: string
   ): Promise<Task> {
     if (!this.isConnected()) {
       await this.connect()
     }
-    return TaskDatabaseService.createTask(this.userId, title, description, config, metadata)
+    return TaskDatabaseService.createTask(this.userId, title, description, workingDirectory, config, metadata, machineId)
   }
 
   /**
