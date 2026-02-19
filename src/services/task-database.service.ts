@@ -430,6 +430,68 @@ export class TaskDatabaseService {
     })
   }
 
+  /**
+   * Remove a milestone from a task
+   */
+  static async removeMilestone(
+    userId: string,
+    taskId: string,
+    milestoneId: string
+  ): Promise<void> {
+    const task = await this.getTask(userId, taskId)
+    if (!task) throw new Error('Task not found')
+    
+    const milestoneIndex = task.progress.milestones.findIndex(m => m.id === milestoneId)
+    if (milestoneIndex === -1) throw new Error('Milestone not found')
+    
+    // Remove the milestone
+    task.progress.milestones.splice(milestoneIndex, 1)
+    
+    // Also remove associated tasks
+    if (task.progress.tasks[milestoneId]) {
+      delete task.progress.tasks[milestoneId]
+    }
+    
+    const db = this.getDb()
+    const taskPath = getUserTask(userId, taskId)
+    
+    await db.doc(taskPath).update({
+      'progress.milestones': task.progress.milestones,
+      'progress.tasks': task.progress.tasks,
+      updated_at: new Date().toISOString()
+    })
+  }
+
+  /**
+   * Remove a task item from a milestone
+   */
+  static async removeTaskItem(
+    userId: string,
+    taskId: string,
+    milestoneId: string,
+    taskItemId: string
+  ): Promise<void> {
+    const task = await this.getTask(userId, taskId)
+    if (!task) throw new Error('Task not found')
+    
+    const items = task.progress.tasks[milestoneId]
+    if (!items) throw new Error('Milestone not found')
+    
+    const itemIndex = items.findIndex(item => item.id === taskItemId)
+    if (itemIndex === -1) throw new Error('Task item not found')
+    
+    // Remove the task item
+    items.splice(itemIndex, 1)
+    
+    const db = this.getDb()
+    const taskPath = getUserTask(userId, taskId)
+    
+    await db.doc(taskPath).update({
+      [`progress.tasks.${milestoneId}`]: items,
+      updated_at: new Date().toISOString()
+    })
+  }
+
   // ==================== Query Methods ====================
 
   /**

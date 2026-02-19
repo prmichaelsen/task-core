@@ -254,6 +254,30 @@ export class FirebaseClient {
     return TaskDatabaseService.completeTaskItem(this.userId, taskId, milestoneId, taskItemId)
   }
 
+  /**
+   * Remove a milestone (user-scoped)
+   */
+  async removeMilestone(taskId: string, milestoneId: string): Promise<void> {
+    if (!this.isConnected()) {
+      await this.connect()
+    }
+    return TaskDatabaseService.removeMilestone(this.userId, taskId, milestoneId)
+  }
+
+  /**
+   * Remove a task item (user-scoped)
+   */
+  async removeTaskItem(
+    taskId: string,
+    milestoneId: string,
+    taskItemId: string
+  ): Promise<void> {
+    if (!this.isConnected()) {
+      await this.connect()
+    }
+    return TaskDatabaseService.removeTaskItem(this.userId, taskId, milestoneId, taskItemId)
+  }
+
   // ==================== Message Operations ====================
 
   /**

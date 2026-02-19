@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-02-19
+
+### Added
+- `removeMilestone()` method in TaskDatabaseService to delete milestones from tasks
+- `removeTaskItem()` method in TaskDatabaseService to delete task items from milestones
+- `removeMilestone()` method in FirebaseClient for user-scoped milestone deletion
+- `removeTaskItem()` method in FirebaseClient for user-scoped task item deletion
+
 ## [1.0.0] - 2026-02-18
 
 ### Added
