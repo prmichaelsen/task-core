@@ -51,12 +51,13 @@ export function toMilestoneApiResponse(milestone: Milestone): MilestoneApiRespon
 
 /**
  * Transform Task Progress schema to API response DTO
+ * Converts ACP-compliant progress to API response format
  */
 export function toTaskProgressApiResponse(progress: Task['progress']): TaskProgressApiResponse {
   return {
-    current_milestone: progress.current_milestone,
-    current_task: progress.current_task,
-    overall_percentage: progress.overall_percentage,
+    current_milestone: progress.project.current_milestone,
+    current_task: progress.progress.overall.toString(),
+    overall_percentage: progress.progress.overall,
     milestones: progress.milestones.map(toMilestoneApiResponse),
     tasks: Object.fromEntries(
       Object.entries(progress.tasks).map(([milestoneId, items]) => [

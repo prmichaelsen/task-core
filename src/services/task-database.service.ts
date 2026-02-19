@@ -52,11 +52,34 @@ export class TaskDatabaseService {
       created_at: now,
       updated_at: now,
       progress: {
-        current_milestone: '',
-        current_task: '',
-        overall_percentage: 0,
+        project: {
+          name: title,
+          version: '0.1.0',
+          started: now,
+          status: 'not_started',
+          current_milestone: '',
+          description: description
+        },
         milestones: [],
-        tasks: {}
+        tasks: {},
+        documentation: {
+          design_documents: 0,
+          milestone_documents: 0,
+          pattern_documents: 0,
+          task_documents: 0,
+          last_updated: now
+        },
+        progress: {
+          planning: 0,
+          implementation: 0,
+          testing: 0,
+          documentation: 0,
+          overall: 0
+        },
+        recent_work: [],
+        next_steps: [],
+        notes: [],
+        current_blockers: []
       },
       execution: {
         api_messages: [],

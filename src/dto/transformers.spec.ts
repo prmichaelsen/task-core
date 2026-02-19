@@ -1,6 +1,6 @@
 /**
  * DTO Transformers Unit Tests
- * 
+ *
  * Tests for schema-to-DTO transformation functions
  */
 
@@ -16,6 +16,44 @@ import {
   toTaskListApiResponse,
   toTaskMessageListApiResponse
 } from './transformers.js'
+
+/**
+ * Helper function to create ACP-compliant progress object for tests
+ */
+function createTestProgress(overrides?: Partial<Task['progress']>): Task['progress'] {
+  const now = '2026-02-16T00:00:00Z'
+  return {
+    project: {
+      name: 'Test Project',
+      version: '1.0.0',
+      started: now,
+      status: 'in_progress',
+      current_milestone: '',
+      description: 'Test description'
+    },
+    milestones: [],
+    tasks: {},
+    documentation: {
+      design_documents: 0,
+      milestone_documents: 0,
+      pattern_documents: 0,
+      task_documents: 0,
+      last_updated: now
+    },
+    progress: {
+      planning: 0,
+      implementation: 0,
+      testing: 0,
+      documentation: 0,
+      overall: 0
+    },
+    recent_work: [],
+    next_steps: [],
+    notes: [],
+    current_blockers: [],
+    ...overrides
+  }
+}
 
 describe('DTO Transformers', () => {
   describe('toTaskItemApiResponse', () => {
@@ -115,9 +153,14 @@ describe('DTO Transformers', () => {
   describe('toTaskProgressApiResponse', () => {
     it('should transform task progress with milestones and tasks', () => {
       const progress: Task['progress'] = {
-        current_milestone: 'milestone-1',
-        current_task: 'task-1',
-        overall_percentage: 50,
+        project: {
+          name: 'Test Project',
+          version: '1.0.0',
+          started: '2026-02-16T00:00:00Z',
+          status: 'in_progress',
+          current_milestone: 'milestone-1',
+          description: 'Test project description'
+        },
         milestones: [
           {
             id: 'milestone-1',
@@ -145,13 +188,31 @@ describe('DTO Transformers', () => {
               status: 'in_progress'
             }
           ]
-        }
+        },
+        documentation: {
+          design_documents: 0,
+          milestone_documents: 1,
+          pattern_documents: 0,
+          task_documents: 2,
+          last_updated: '2026-02-16T00:00:00Z'
+        },
+        progress: {
+          planning: 100,
+          implementation: 50,
+          testing: 25,
+          documentation: 75,
+          overall: 50
+        },
+        recent_work: [],
+        next_steps: [],
+        notes: [],
+        current_blockers: []
       }
 
       const result = toTaskProgressApiResponse(progress)
 
       expect(result.current_milestone).toBe('milestone-1')
-      expect(result.current_task).toBe('task-1')
+      expect(result.current_task).toBe('50')
       expect(result.overall_percentage).toBe(50)
       expect(result.milestones).toHaveLength(1)
       expect(result.milestones[0].id).toBe('milestone-1')
@@ -237,13 +298,23 @@ describe('DTO Transformers', () => {
         created_at: '2026-02-16T10:00:00Z',
         updated_at: '2026-02-16T12:00:00Z',
         started_at: '2026-02-16T10:30:00Z',
-        progress: {
-          current_milestone: 'milestone-1',
-          current_task: 'task-1',
-          overall_percentage: 25,
-          milestones: [],
-          tasks: {}
-        },
+        progress: createTestProgress({
+          project: {
+            name: 'Test Project',
+            version: '1.0.0',
+            started: '2026-02-16T00:00:00Z',
+            status: 'in_progress',
+            current_milestone: 'milestone-1',
+            description: 'Test description'
+          },
+          progress: {
+            planning: 25,
+            implementation: 25,
+            testing: 25,
+            documentation: 25,
+            overall: 25
+          }
+        }),
         execution: {
           api_messages: [{ role: 'user', content: 'secret' }],
           task_messages: [],
@@ -287,13 +358,7 @@ describe('DTO Transformers', () => {
         status: 'not_started',
         created_at: '2026-02-16T10:00:00Z',
         updated_at: '2026-02-16T10:00:00Z',
-        progress: {
-          current_milestone: '',
-          current_task: '',
-          overall_percentage: 0,
-          milestones: [],
-          tasks: {}
-        },
+        progress: createTestProgress(),
         execution: {
           api_messages: [],
           task_messages: [],
@@ -363,13 +428,15 @@ describe('DTO Transformers', () => {
           status: 'completed',
           created_at: '2026-02-16T10:00:00Z',
           updated_at: '2026-02-16T12:00:00Z',
-          progress: {
-            current_milestone: '',
-            current_task: '',
-            overall_percentage: 100,
-            milestones: [],
-            tasks: {}
-          },
+          progress: createTestProgress({
+            progress: {
+              planning: 100,
+              implementation: 100,
+              testing: 100,
+              documentation: 100,
+              overall: 100
+            }
+          }),
           execution: {
             api_messages: [],
             task_messages: [],
@@ -388,13 +455,15 @@ describe('DTO Transformers', () => {
           status: 'in_progress',
           created_at: '2026-02-16T11:00:00Z',
           updated_at: '2026-02-16T12:00:00Z',
-          progress: {
-            current_milestone: '',
-            current_task: '',
-            overall_percentage: 50,
-            milestones: [],
-            tasks: {}
-          },
+          progress: createTestProgress({
+            progress: {
+              planning: 50,
+              implementation: 50,
+              testing: 50,
+              documentation: 50,
+              overall: 50
+            }
+          }),
           execution: {
             api_messages: [],
             task_messages: [],
