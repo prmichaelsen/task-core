@@ -89,16 +89,12 @@ cp "$TEMP_DIR/agent/progress.template.yaml" "agent/"
 # Update AGENT.md
 cp "$TEMP_DIR/AGENT.md" "."
 
-# Update scripts (copy common.sh first, then others)
-cp "$TEMP_DIR/agent/scripts/acp.common.sh" "agent/scripts/"
-cp "$TEMP_DIR/agent/scripts/acp.yaml.sh" "agent/scripts/"
-cp "$TEMP_DIR/agent/scripts/acp.version-update.sh" "agent/scripts/"
-cp "$TEMP_DIR/agent/scripts/acp.version-check-for-updates.sh" "agent/scripts/"
-cp "$TEMP_DIR/agent/scripts/acp.uninstall.sh" "agent/scripts/"
-cp "$TEMP_DIR/agent/scripts/acp.version-check.sh" "agent/scripts/"
-cp "$TEMP_DIR/agent/scripts/acp.install.sh" "agent/scripts/"
-cp "$TEMP_DIR/agent/scripts/acp.package-install.sh" "agent/scripts/"
-chmod +x agent/scripts/*.sh
+# Update all scripts (*.sh files)
+# This ensures all current and future scripts are copied
+if [ -d "$TEMP_DIR/agent/scripts" ]; then
+    find "$TEMP_DIR/agent/scripts" -maxdepth 1 -name "*.sh" -exec cp {} "agent/scripts/" \;
+    chmod +x agent/scripts/*.sh
+fi
 
 # Clean up deprecated scripts (from versions < 2.0.0)
 . "agent/scripts/acp.common.sh"
@@ -123,24 +119,7 @@ echo ""
 echo "For detailed changelog:"
 echo "  https://github.com/prmichaelsen/agent-context-protocol/blob/mainline/CHANGELOG.md"
 echo ""
-echo "${BLUE}ACP Commands Available:${NC}"
-echo ""
-echo "  ${GREEN}@acp.init${NC}                    - Initialize agent context (run after update!)"
-echo "  ${GREEN}@acp.proceed${NC}                 - Continue with next task"
-echo "  ${GREEN}@acp.status${NC}                  - Display project status"
-echo "  ${GREEN}@acp.update${NC}                  - Update progress tracking"
-echo "  ${GREEN}@acp.sync${NC}                    - Sync documentation with code"
-echo "  ${GREEN}@acp.validate${NC}                - Validate ACP documents"
-echo "  ${GREEN}@acp.report${NC}                  - Generate project report"
-echo "  ${GREEN}@acp.version-check${NC}           - Show current ACP version"
-echo "  ${GREEN}@acp.version-check-for-updates${NC} - Check for ACP updates"
-echo "  ${GREEN}@acp.version-update${NC}          - Update ACP to latest version"
-echo "  ${GREEN}@acp.package-install${NC}         - Install third-party command packages"
-echo ""
-echo "${BLUE}Git Commands Available:${NC}"
-echo ""
-echo "  ${GREEN}@git.init${NC}                    - Initialize git repository with smart .gitignore"
-echo "  ${GREEN}@git.commit${NC}                  - Intelligent version-aware git commit"
+display_available_commands
 echo ""
 echo "${BLUE}For AI agents:${NC}"
 echo "Type '${GREEN}@acp.init${NC}' to reload context with updated files."

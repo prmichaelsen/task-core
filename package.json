@@ -24,6 +24,10 @@
     "./constants": {
       "types": "./dist/constant/collections.d.ts",
       "import": "./dist/constant/collections.js"
+    },
+    "./errors": {
+      "types": "./dist/errors/index.d.ts",
+      "import": "./dist/errors/index.js"
     }
   },
   "scripts": {

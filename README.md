@@ -45,6 +45,7 @@ This package uses subpath exports for optimal tree-shaking:
 - `@prmichaelsen/task-core/services` - Firestore service layer
 - `@prmichaelsen/task-core/client` - Firebase client wrapper
 - `@prmichaelsen/task-core/constants` - Collection path helpers
+- `@prmichaelsen/task-core/errors` - Error classes and utilities
 
 ## Usage
 
@@ -198,6 +199,58 @@ const taskPath = getUserTask('user-123', 'task-1')
 const messagesPath = getUserTaskMessages('user-123', 'task-1')
 // Returns: 'users/user-123/tasks/task-1/messages'
 ```
+
+### Errors
+
+Handle errors consistently across MCP and REST implementations:
+
+```typescript
+import {
+  TaskNotFoundError,
+  TaskValidationError,
+  TaskAuthorizationError,
+  isTaskError,
+  toTaskError
+} from '@prmichaelsen/task-core/errors'
+
+try {
+  const task = await TaskDatabaseService.getTask('user-123', 'task-1')
+  if (!task) {
+    throw new TaskNotFoundError('task-1', 'user-123')
+  }
+} catch (error) {
+  if (isTaskError(error)) {
+    console.error(`Error ${error.code}: ${error.message}`)
+    console.error(`Status: ${error.statusCode}`)
+    console.error(`Details:`, error.details)
+  } else {
+    // Convert unknown errors to TaskError
+    const taskError = toTaskError(error)
+    console.error(taskError.toJSON())
+  }
+}
+```
+
+**Available Error Classes**:
+- `TaskNotFoundError` - Task doesn't exist (404)
+- `TaskValidationError` - Invalid task data (400)
+- `TaskAlreadyExistsError` - Duplicate task (409)
+- `TaskStateError` - Invalid state transition (409)
+- `MilestoneNotFoundError` - Milestone doesn't exist (404)
+- `TaskItemNotFoundError` - Task item doesn't exist (404)
+- `TaskMessageNotFoundError` - Message doesn't exist (404)
+- `TaskAuthorizationError` - Permission denied (403)
+- `TaskDatabaseError` - Database operation failed (500)
+- `TaskConfigurationError` - Invalid configuration (400)
+- `TaskLimitExceededError` - Limit exceeded (429)
+- `TaskOperationTimeoutError` - Operation timeout (408)
+- `FirebaseConnectionError` - Firebase connection failed (503)
+- `InvalidInputError` - Invalid input parameter (400)
+
+**Utilities**:
+- `isTaskError(error)` - Type guard to check if error is a TaskError
+- `toTaskError(error)` - Convert any error to TaskError
+- `TaskErrorCodes` - Constants for all error codes
 
 ## API Reference
 
