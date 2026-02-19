@@ -1,6 +1,6 @@
 {
   "name": "@prmichaelsen/task-core",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Core business logic for task execution system",
   "type": "module",
   "main": "dist/index.js",
