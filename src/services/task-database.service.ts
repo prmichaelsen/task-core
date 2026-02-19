@@ -44,7 +44,7 @@ export class TaskDatabaseService {
     const db = this.getDb()
     const now = new Date().toISOString()
     
-    const taskData: Omit<Task, 'id'> = {
+    const taskData: Omit<Task, 'id'> & { metadata?: Task['metadata'] } = {
       user_id: userId,
       title,
       description,
@@ -91,7 +91,7 @@ export class TaskDatabaseService {
         auto_approve: config?.auto_approve ?? true,
         max_iterations: config?.max_iterations || 500
       },
-      metadata: metadata
+      ...(metadata && { metadata })
     }
     
     const tasksPath = getUserTasks(userId)
@@ -289,7 +289,7 @@ export class TaskDatabaseService {
     const taskPath = getUserTask(userId, taskId)
     
     await db.doc(taskPath).update({
-      'progress.overall_percentage': Math.min(100, Math.max(0, percentage)),
+      'progress.progress.overall': Math.min(100, Math.max(0, percentage)),
       updated_at: new Date().toISOString()
     })
   }

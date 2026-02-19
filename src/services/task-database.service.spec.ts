@@ -9,6 +9,44 @@ import { describe, it, expect, jest, beforeAll, beforeEach } from '@jest/globals
 import { TaskDatabaseService } from './task-database.service.js'
 import type { Task, Milestone, TaskItem } from '../schemas/task.js'
 
+/**
+ * Helper function to create ACP-compliant progress object for tests
+ */
+function createTestProgress(overrides?: Partial<Task['progress']>): Task['progress'] {
+  const now = '2026-02-16T00:00:00Z'
+  return {
+    project: {
+      name: 'Test Project',
+      version: '1.0.0',
+      started: now,
+      status: 'in_progress',
+      current_milestone: 'M1',
+      description: 'Test description'
+    },
+    milestones: [],
+    tasks: {},
+    documentation: {
+      design_documents: 0,
+      milestone_documents: 0,
+      pattern_documents: 0,
+      task_documents: 0,
+      last_updated: now
+    },
+    progress: {
+      planning: 50,
+      implementation: 50,
+      testing: 50,
+      documentation: 50,
+      overall: 50
+    },
+    recent_work: [],
+    next_steps: [],
+    notes: [],
+    current_blockers: [],
+    ...overrides
+  }
+}
+
 // Mock Firestore
 const mockGet = jest.fn<any>()
 const mockAdd = jest.fn<any>()
@@ -117,20 +155,13 @@ describe('TaskDatabaseService', () => {
         status: 'in_progress',
         created_at: '2026-02-16T00:00:00Z',
         updated_at: '2026-02-16T00:00:00Z',
-        progress: {
-          current_milestone: 'M1',
-          current_task: 'task-1',
-          overall_percentage: 50,
-          milestones: [],
-          tasks: {}
-        },
+        progress: createTestProgress(),
         execution: {
           api_messages: [],
           task_messages: [],
           tool_results: []
         },
         config: {
-          
           system_prompt: 'test',
           auto_approve: true
         }
@@ -230,20 +261,21 @@ describe('TaskDatabaseService', () => {
             status: 'not_started',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
-            progress: {
-              current_milestone: '',
-              current_task: '',
-              overall_percentage: 0,
-              milestones: [],
-              tasks: {}
-            },
+            progress: createTestProgress({
+              progress: {
+                planning: 0,
+                implementation: 0,
+                testing: 0,
+                documentation: 0,
+                overall: 0
+              }
+            }),
             execution: {
               api_messages: [],
               task_messages: [],
               tool_results: []
             },
             config: {
-              
               system_prompt: '',
               auto_approve: true
             }
@@ -333,7 +365,7 @@ describe('TaskDatabaseService', () => {
 
       expect(mockUpdate).toHaveBeenCalledWith(
         expect.objectContaining({
-          'progress.overall_percentage': 75,
+          'progress.progress.overall': 75,
           updated_at: expect.any(String)
         })
       )
@@ -346,7 +378,7 @@ describe('TaskDatabaseService', () => {
 
       expect(mockUpdate).toHaveBeenCalledWith(
         expect.objectContaining({
-          'progress.overall_percentage': 100
+          'progress.progress.overall': 100
         })
       )
 
@@ -354,7 +386,7 @@ describe('TaskDatabaseService', () => {
 
       expect(mockUpdate).toHaveBeenCalledWith(
         expect.objectContaining({
-          'progress.overall_percentage': 0
+          'progress.progress.overall': 0
         })
       )
     })
@@ -372,20 +404,13 @@ describe('TaskDatabaseService', () => {
             status: 'in_progress',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
-            progress: {
-              current_milestone: '',
-              current_task: '',
-              overall_percentage: 0,
-              milestones: [],
-              tasks: {}
-            },
+            progress: createTestProgress(),
             execution: {
               api_messages: [],
               task_messages: [],
               tool_results: []
             },
             config: {
-              
               system_prompt: '',
               auto_approve: true
             }
@@ -417,20 +442,13 @@ describe('TaskDatabaseService', () => {
             status: 'in_progress',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
-            progress: {
-              current_milestone: '',
-              current_task: '',
-              overall_percentage: 0,
-              milestones: [],
-              tasks: {}
-            },
+            progress: createTestProgress(),
             execution: {
               api_messages: [],
               task_messages: [],
               tool_results: []
             },
             config: {
-              
               system_prompt: '',
               auto_approve: true
             }
@@ -445,20 +463,13 @@ describe('TaskDatabaseService', () => {
             status: 'not_started',
             created_at: '2026-02-16T00:00:00Z',
             updated_at: '2026-02-16T00:00:00Z',
-            progress: {
-              current_milestone: '',
-              current_task: '',
-              overall_percentage: 0,
-              milestones: [],
-              tasks: {}
-            },
+            progress: createTestProgress(),
             execution: {
               api_messages: [],
               task_messages: [],
               tool_results: []
             },
             config: {
-              
               system_prompt: '',
               auto_approve: true
             }
